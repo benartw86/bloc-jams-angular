@@ -6,7 +6,7 @@
                 requireBase: false
             });
         
-        $stateProvider
+        $stateProvider                  //becuase $stateProvider.state() returns $stateProvider, we are able to call state() again without having to reference the $stateProvider, called method chaining
             .state('landing', {
                 url: '/',
                 templateUrl: '/templates/landing.html'
