@@ -1,1 +1,1 @@
-angular.module('blocJams', []);
+angular.module('blocJams', ['ui.router']);  //the second argument that is an array is called the dependency injection, for listing external modules
