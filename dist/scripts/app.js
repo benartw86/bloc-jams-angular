@@ -1,4 +1,4 @@
-(function) {
+(function() {
     function config($stateProvider, $locationProvider) {
         $locationProvider
             .html5Mode({
@@ -15,8 +15,8 @@
                 url: '/album',
                 templateUrl: '/templates/album.html'
             })
-            .state('collection', {
-                url:'/collection',
+            .state('collection', {  //$stateProvider, a component of UI-Router, will determine a number of properties for a state. 
+                url:'/collection',  //For Bloc Jams, we'll need to know how to configure at least four aspects of a state: its name, URL route, controller, and template.0
                 templateUrl: '/templates/collection.html'
             });
     }
