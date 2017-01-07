@@ -8,6 +8,6 @@
     
     angular
         .module('blocJams')
-        .controller('CollectionCtrl', CollectionCtrl);
+        .controller('CollectionCtrl', ['Fixtures', CollectionCtrl]);
 })();
 
