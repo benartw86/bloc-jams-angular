@@ -37,11 +37,21 @@ var albumPicasso = {
     return albumPicasso;
   };
         
-     return Fixtures;
-  }   
+  Fixtures.getCollection = function(numberOfAlbums) {
+    this.albums = [];
+    for(i = 0; i < numberOfAlbums; i++) {
+        this.albums.push(angular.copy(albumPicasso));
+    
+    }  
+    return this.albums    
+  };
+        
+   return Fixtures;
+}
+    
+
     
   angular
     .module('blocJams')
-    .factory('Fixtures', Fixtures);
-    
-})();
+    .factory('Fixtures', Fixtures);  //Added fixtures to the array of depencies, the service
+})();                                // is available for use within the controller.  
