@@ -1,6 +1,17 @@
 (function() {
     function SongPlayer() {
-        var SongPlayer = {};  //declare empty variable that is returned, making properties public
+        
+        /**
+        * @desc declare empty variable that is returned, making properties public
+        * @type {Object}
+        */
+        
+        var SongPlayer = {};  
+        
+        /*@desc: object to be used to determine if song is playing or not
+        @type {object}. 
+        */
+        
         var currentSong= null;  //private attribute 
         
          /**
@@ -10,6 +21,16 @@
         
         var currentBuzzObject = null; //private attribute
         
+        /**
+         * @function playSong
+        * @desc makes the song selected play
+        * @param {Object} song
+        */
+        
+        var playSong = function(song) {
+            currentBuzzObject.play();
+            song.playing = true;
+        }   
         
         /**
          * @function setSong
@@ -17,10 +38,6 @@
         * @param {Object} song
         */
         
-    var playSong = function() {
-     currentBuzzObject.play();
-     song.playing = true;
-    }   
     
         var setSong = function(song) {
     if (currentBuzzObject) {
@@ -39,8 +56,7 @@
  SongPlayer.play = function(song) {
      if (currentSong !== song) {
          setSong(song);
-         currentBuzzObject.play();
-         song.playing = true;
+         playSong(song);
      } else if (currentSong === song) {
          if (currentBuzzObject.isPaused()) {
              currentBuzzObject.play();
@@ -49,11 +65,11 @@
  }
  
  SongPlayer.pause = function(song) {
-                currentBuzzObject.pause();
-                song.playing = false;
-            };
-        return SongPlayer;
-      }
+      currentBuzzObject.pause();
+      song.playing = false;
+     };
+  return SongPlayer;
+}
     
  
     
