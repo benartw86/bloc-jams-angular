@@ -1,5 +1,5 @@
 (function() {
-    function SongPlayer() {
+    function SongPlayer(Fixtures) {
         
         /**
         * @desc declare empty variable that is returned, making properties public
@@ -8,11 +8,13 @@
         
         var SongPlayer = {};  
         
-        /*@desc: object to be used to determine if song is playing or not
-        @type {object}. 
+        /**
+        * @desc currentAlbum store album information to access song array for next/previous
+        * @type {Object}
         */
         
-        var currentSong= null;  //private attribute 
+        var currentAlbum = Fixtures.getAlbum();
+        
         
          /**
         * @desc Buzz object audio file
@@ -39,10 +41,10 @@
         */
         
     
-        var setSong = function(song) {
-    if (currentBuzzObject) {
+    var setSong = function(song) {
+        if (currentBuzzObject) {
         currentBuzzObject.stop();
-        currentSong.playing = null;
+        SongPlayer.currentSong.playing = null;
     }
  
     currentBuzzObject = new buzz.sound(song.audioUrl, {
@@ -50,26 +52,65 @@
         preload: true
     });
  
-    currentSong = song;
+    SongPlayer.currentSong = song;
  };
+        
+        /**
+         * @function getSongIndex
+        * @desc a function to get the index of the song
+        * @param {Object} song
+        */
+        
+    var getSongIndex = function() {
+        return currentAlbum.songs.indexOf(song);
+    }
+        
+        
+        /*@desc: object to be used to determine if song is playing or not
+        @type {object}. 
+        */
+        
+    SongPlayer.currentSong= null;  //public attribute 
 
- SongPlayer.play = function(song) {
-     if (currentSong !== song) {
+    SongPlayer.play = function(song) {
+     song = song || SongPlayer.currentSong;
+     if (SongPlayer.currentSong !== song) {
          setSong(song);
          playSong(song);
-     } else if (currentSong === song) {
-         if (currentBuzzObject.isPaused()) {
-             currentBuzzObject.play();
+         
+     } else if (SongPlayer.currentSong === song) {
+         if (currentBuzzObject.isPaused(song)) {
+             currentBuzzObject.play(song);
          }
      }
  }
  
- SongPlayer.pause = function(song) {
-      currentBuzzObject.pause();
-      song.playing = false;
-     };
-  return SongPlayer;
+    SongPlayer.pause = function(song) {
+        song = song || SongPlayer.currentSong;    
+        currentBuzzObject.pause();
+        song.playing = false;
+       };
+    return SongPlayer;
 }
+        /**
+        * @desc a method to get the previous song in the index of album's songs
+          @type method
+        */
+    
+   SongPlayer.previous = function() {
+     var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+     currentSongIndex--;
+        
+         if (currentSongIndex < 0) {
+         currentBuzzObject.stop();
+         SongPlayer.currentSong.playing = null;
+     } else {
+         var song = currentAlbum.songs[currentSongIndex];
+         setSong(song);
+         playSong(song);
+     }
+    
+};
     
  
     
