@@ -31,8 +31,19 @@
         
         var playSong = function(song) {
             currentBuzzObject.play();
-            song.playing = true;
+            SongPlayer.currentSong.playing = true;
         }   
+        
+        /**
+         * @function stopSong
+        * @desc stops the current buzzobject, function simplifies code
+        * @param {Object} song
+        */
+        
+        var stopSong = function(song) {
+            currentBuzzObject.stop(song);
+            SongPlayer.currentSong.playing = null;
+        }
         
         /**
          * @function setSong
@@ -43,8 +54,7 @@
     
     var setSong = function(song) {
         if (currentBuzzObject) {
-        currentBuzzObject.stop();
-        SongPlayer.currentSong.playing = null;
+        stopSong();
     }
  
     currentBuzzObject = new buzz.sound(song.audioUrl, {
@@ -90,8 +100,8 @@
         currentBuzzObject.pause();
         song.playing = false;
        };
-    return SongPlayer;
-}
+    
+
         /**
         * @desc a method to get the previous song in the index of album's songs
           @type method
@@ -102,17 +112,30 @@
      currentSongIndex--;
         
          if (currentSongIndex < 0) {
-         currentBuzzObject.stop();
-         SongPlayer.currentSong.playing = null;
+            stopSong(songPlayer.currentSong);
      } else {
          var song = currentAlbum.songs[currentSongIndex];
          setSong(song);
          playSong(song);
-     }
+};
+       
+       /**
+        * @desc a method to get the next song in the index of album's songs
+          @type method
+        */
+    
+    SongPlayer.next = function() {
+        var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+        currentSongIndex++;
+    }
     
 };
     
- 
+return SongPlayer;
+
+}
+
+
     
     angular
         .module('blocJams')
