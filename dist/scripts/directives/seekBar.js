@@ -18,7 +18,7 @@
                 onChange: '&'   
             },
               
-              //'&' provides a way to execute an expression in the parent scope, allos the treatment of the given attribute differently, directive evaluates the attribute
+              //'&' provides a way to execute an expression in the parent scope, allows the treatment of the given attribute differently, directive evaluates the attribute
               
             link: function(scope, element, attributes) {
                 scope.value = 0;
@@ -62,7 +62,7 @@
                             scope.value = percent * scope.max;
                             notifyOnChange(scope.value);
                     });
-                });
+                });  
  
                 $document.bind('mouseup.thumb', function() {
                     $document.unbind('mousemove.thumb');
